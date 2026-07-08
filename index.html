@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luthfi Ardyansyah | AI/ML Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0f1115;
-    --bg-raised:#161920;
-    --bg-raised-2:#1d212a;
+    --bg:#0a0b0d;
+    --bg-raised:#141619;
+    --bg-raised-2:#1c1f24;
     --line:rgba(255,255,255,0.08);
-    --line-strong:rgba(255,255,255,0.14);
-    --text:#eef1f5;
+    --line-strong:rgba(255,255,255,0.16);
+    --text:#f5f6f8;
     --text-muted:#8a919c;
     --text-dim:#5c626d;
     --teal:#4fd1c5;
@@ -22,6 +22,7 @@
     --amber-dim:rgba(255,180,84,0.14);
     --indigo:#7c9dff;
     --radius:14px;
+    --display:'Bebas Neue','Space Grotesk',sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -31,10 +32,23 @@
     font-family:'Inter',sans-serif;
     line-height:1.65;
     overflow-x:hidden;
+    cursor:default;
   }
   h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;}
   .mono{font-family:'IBM Plex Mono',monospace;}
   a{color:inherit;}
+
+  /* ===== Cursor glow (desktop, non-touch, motion-ok only) ===== */
+  .cursor-glow{
+    position:fixed;top:0;left:0;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle, rgba(79,209,197,0.10) 0%, rgba(255,180,84,0.05) 40%, transparent 70%);
+    pointer-events:none;z-index:1;transform:translate(-50%,-50%);
+    will-change:transform;transition:opacity .3s ease;opacity:0;
+  }
+  .cursor-glow.on{opacity:1;}
+
+  /* ===== Magnetic buttons ===== */
+  .magnetic{will-change:transform;}
 
   /* background grid texture */
   .bg-grid{
@@ -70,6 +84,7 @@
     font-family:'IBM Plex Mono';font-size:.78rem;
     text-transform:uppercase;letter-spacing:.12em;
     transition:color .25s ease;
+    display:inline-block;text-align:center;
   }
   .nav-links a:hover{color:var(--teal);}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
@@ -77,6 +92,22 @@
   .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
   .hamburger.active span:nth-child(2){opacity:0;}
   .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+  /* ===== Marquee ticker (status bar / section dividers) ===== */
+  .marquee{
+    position:relative;overflow:hidden;
+    background:var(--bg-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:.85rem 0;white-space:nowrap;
+  }
+  .marquee-track{display:inline-flex;animation:marquee 26s linear infinite;}
+  .marquee:hover .marquee-track{animation-play-state:paused;}
+  .marquee span{
+    font-family:'IBM Plex Mono';font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text-muted);padding:0 1.6rem;display:inline-flex;align-items:center;gap:.7rem;
+  }
+  .marquee span i{width:5px;height:5px;border-radius:50%;background:var(--amber);display:inline-block;}
+  .marquee span.hl{color:var(--teal);}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
   section{padding:9rem 6% 6rem;position:relative;}
   .eyebrow{
@@ -98,7 +129,10 @@
     margin-left:.15em;vertical-align:-0.12em;animation:blink 1s steps(1) infinite;
   }
   @keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
-  .section-title{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:1.2rem;}
+  .section-title{
+    font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.005em;
+    font-size:clamp(2.4rem,5.2vw,3.8rem);line-height:.98;margin-bottom:1.2rem;
+  }
   .section-intro{color:var(--text-muted);max-width:620px;margin-bottom:3rem;font-size:1.02rem;}
 
   /* ===== Hero ===== */
@@ -116,10 +150,24 @@
   }
   .hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);}
   .hero h1{
-    font-size:clamp(2.3rem,5.2vw,4.2rem);
-    line-height:1.08;margin-bottom:1.2rem;
+    font-family:var(--display);
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(3.2rem,9vw,7.2rem);
+    line-height:.92;letter-spacing:.002em;margin-bottom:1.2rem;
   }
-  .hero h1 .accent{color:var(--teal);}
+  .hero h1 .accent{
+    color:var(--teal);position:relative;display:inline-block;
+  }
+  .hero h1 .accent:hover{animation:glitch .35s steps(2) both;}
+  @keyframes glitch{
+    0%{clip-path:inset(0 0 0 0);transform:translate(0,0);}
+    20%{clip-path:inset(10% 0 60% 0);transform:translate(-3px,1px);text-shadow:2px 0 var(--amber);}
+    40%{clip-path:inset(60% 0 5% 0);transform:translate(3px,-1px);text-shadow:-2px 0 #ff5f57;}
+    60%{clip-path:inset(20% 0 40% 0);transform:translate(-2px,0);text-shadow:2px 0 var(--amber);}
+    80%{clip-path:inset(0 0 70% 0);transform:translate(2px,1px);}
+    100%{clip-path:inset(0 0 0 0);transform:translate(0,0);text-shadow:none;}
+  }
   .hero-role{
     font-family:'IBM Plex Mono';font-size:1rem;color:var(--text-muted);
     margin-bottom:1.6rem;letter-spacing:.02em;
@@ -242,6 +290,32 @@
   .focus-card h3{font-size:1.1rem;margin-bottom:.6rem;}
   .focus-card p{color:var(--text-muted);font-size:.92rem;}
 
+  /* ===== Manifesto quote slider ===== */
+  #manifesto{
+    background:var(--bg-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:6rem 6%;
+  }
+  .manifesto-wrap{max-width:980px;margin:0 auto;text-align:center;}
+  .manifesto-slide{display:none;}
+  .manifesto-slide.active{display:block;animation:slideUp .5s ease both;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  .manifesto-quote{
+    font-family:var(--display);text-transform:uppercase;font-weight:400;
+    font-size:clamp(1.8rem,5vw,3.6rem);line-height:1.05;letter-spacing:.005em;
+  }
+  .manifesto-quote .lit{color:var(--teal);}
+  .manifesto-quote .lit2{color:var(--amber);}
+  .manifesto-index{
+    font-family:'IBM Plex Mono';font-size:.78rem;color:var(--text-dim);margin-top:2rem;
+    display:flex;align-items:center;justify-content:center;gap:1rem;
+  }
+  .manifesto-dots{display:flex;gap:.5rem;}
+  .manifesto-dots button{
+    width:7px;height:7px;border-radius:50%;border:none;background:var(--line-strong);cursor:pointer;padding:0;
+    transition:all .25s ease;
+  }
+  .manifesto-dots button.active{background:var(--teal);width:20px;border-radius:4px;}
+
   /* ===== Contact ===== */
   .contact-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
   .contact-info h3{font-size:1.6rem;margin-bottom:1rem;}
@@ -287,8 +361,17 @@
   .footer-links a:hover{color:var(--teal);}
 
   /* reveal */
-  .reveal{opacity:0;transform:translateY(24px);transition:all .7s ease;}
+  .reveal{opacity:0;transform:translateY(24px);transition:all .7s cubic-bezier(.16,1,.3,1);}
   .reveal.active{opacity:1;transform:translateY(0);}
+  .focus-grid .focus-card:nth-child(1){transition-delay:0s;}
+  .focus-grid .focus-card:nth-child(2){transition-delay:.1s;}
+  .focus-grid .focus-card:nth-child(3){transition-delay:.2s;}
+  .focus-grid .focus-card:nth-child(4){transition-delay:.3s;}
+  .portfolio-grid .portfolio-item:nth-child(1){transition-delay:0s;}
+  .portfolio-grid .portfolio-item:nth-child(2){transition-delay:.08s;}
+  .portfolio-grid .portfolio-item:nth-child(3){transition-delay:.16s;}
+  .portfolio-grid .portfolio-item:nth-child(4){transition-delay:.24s;}
+  .portfolio-grid .portfolio-item:nth-child(5){transition-delay:.32s;}
 
   /* modal */
   .modal{display:none;position:fixed;inset:0;background:rgba(10,12,16,0.85);backdrop-filter:blur(8px);
@@ -301,6 +384,33 @@
   .modal-content p{color:var(--text-muted);line-height:1.75;margin-bottom:.8rem;font-size:.95rem;}
   .modal-close{position:absolute;top:14px;right:18px;font-size:1.3rem;cursor:pointer;color:var(--text-dim);}
   .modal-close:hover{color:var(--teal);}
+
+  /* ===== Visitor geo toast ===== */
+  .geo-toast{
+    position:fixed;left:24px;bottom:24px;z-index:1500;
+    max-width:320px;background:var(--bg-raised);border:1px solid var(--line-strong);border-radius:12px;
+    padding:1rem 1.1rem;box-shadow:0 20px 50px rgba(0,0,0,0.45);
+    transform:translateY(140%);transition:transform .5s cubic-bezier(.22,1,.36,1);
+  }
+  .geo-toast.show{transform:translateY(0);}
+  .geo-toast-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.45rem;}
+  .geo-toast-head .live-dot{margin-right:0;}
+  .geo-toast-label{font-family:'IBM Plex Mono';font-size:.68rem;color:var(--teal);text-transform:uppercase;letter-spacing:.12em;flex:1;}
+  .geo-toast-close{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1rem;line-height:1;}
+  .geo-toast-close:hover{color:var(--teal);}
+  .geo-toast-text{font-family:'IBM Plex Mono';font-size:.8rem;color:var(--text);line-height:1.5;}
+  .geo-toast-text b{color:var(--amber);}
+  @media (max-width:480px){.geo-toast{left:12px;right:12px;max-width:none;bottom:12px;}}
+
+  /* ===== CV gate modal ===== */
+  .cv-form .form-group{margin-bottom:1rem;text-align:left;}
+  .cv-error{
+    font-family:'IBM Plex Mono';font-size:.74rem;color:#ff8a80;margin-top:.4rem;min-height:1em;display:block;
+  }
+  .cv-success{
+    display:flex;align-items:center;gap:.6rem;background:var(--teal-dim);border:1px solid rgba(79,209,197,0.35);
+    color:var(--teal);font-family:'IBM Plex Mono';font-size:.82rem;padding:.8rem 1rem;border-radius:8px;margin-top:1rem;
+  }
 
   ::-webkit-scrollbar{width:8px;}
   ::-webkit-scrollbar-track{background:var(--bg);}
@@ -337,6 +447,25 @@
     font-family:'IBM Plex Mono';font-size:.78rem;color:var(--text-muted);flex:1;
   }
   .chat-header .chat-title b{color:var(--text);}
+  .chat-online-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--teal);display:inline-block;
+    margin-right:.4rem;box-shadow:0 0 0 0 rgba(79,209,197,0.6);animation:onlinePulse 1.8s infinite;
+  }
+  @keyframes onlinePulse{
+    0%{box-shadow:0 0 0 0 rgba(79,209,197,0.5);}
+    70%{box-shadow:0 0 0 7px rgba(79,209,197,0);}
+    100%{box-shadow:0 0 0 0 rgba(79,209,197,0);}
+  }
+  .msg-typing{display:flex;gap:4px;padding:.75rem .95rem;}
+  .msg-typing span{
+    width:6px;height:6px;border-radius:50%;background:var(--text-dim);display:inline-block;
+    animation:typingBounce 1s infinite ease-in-out;
+  }
+  .msg-typing span:nth-child(2){animation-delay:.15s;}
+  .msg-typing span:nth-child(3){animation-delay:.3s;}
+  @keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-4px);opacity:1;}}
+  .msg{animation:msgIn .3s ease both;}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
   .chat-close{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1.1rem;}
   .chat-close:hover{color:var(--teal);}
 
@@ -446,10 +575,197 @@
     .nav-links.active{right:0;}
     .metric-row{grid-template-columns:1fr 1fr;}
   }
+
+  /* ============================================================
+     QUEST MODE — Player HUD, Avatar Creator, Quest Log, Legends
+     ============================================================ */
+  :root{
+    --xp:#7ee787; --xp-bg:#1c2b1f; --rare:#a970ff; --rare-dim:rgba(169,112,255,0.14);
+    --pixel:'IBM Plex Mono',monospace;
+  }
+
+  .quest-toast-wrap{position:fixed;top:84px;right:20px;z-index:2500;display:flex;flex-direction:column;gap:.6rem;pointer-events:none;}
+  .quest-toast{
+    pointer-events:auto;min-width:230px;max-width:290px;background:var(--bg-raised-2);
+    border:1px solid var(--rare);border-radius:12px;padding:.85rem 1rem;
+    box-shadow:0 14px 34px rgba(0,0,0,.5), 0 0 0 1px rgba(169,112,255,.08);
+    transform:translateX(120%);opacity:0;transition:all .45s cubic-bezier(.22,1,.36,1);
+  }
+  .quest-toast.show{transform:translateX(0);opacity:1;}
+  .quest-toast .qt-top{display:flex;align-items:center;gap:.5rem;font-family:var(--pixel);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--rare);margin-bottom:.35rem;}
+  .quest-toast .qt-top::before{content:'★';}
+  .quest-toast .qt-title{font-size:.95rem;font-weight:600;margin-bottom:.2rem;}
+  .quest-toast .qt-xp{font-family:var(--pixel);font-size:.72rem;color:var(--xp);}
+
+  .player-hud{
+    position:fixed;top:88px;left:14px;z-index:1400;
+    display:flex;align-items:center;gap:.7rem;
+    background:rgba(20,22,25,0.88);backdrop-filter:blur(12px);
+    border:1px solid var(--line-strong);border-radius:50px;
+    padding:.4rem .9rem .4rem .4rem;
+    transition:transform .3s ease, opacity .3s ease;
+    opacity:0;transform:translateY(-12px);
+  }
+  .player-hud.ready{opacity:1;transform:translateY(0);}
+  .player-hud:hover{border-color:var(--teal);cursor:pointer;}
+  .hud-avatar{width:38px;height:38px;border-radius:50%;overflow:hidden;background:var(--bg-raised);border:1px solid var(--line-strong);flex-shrink:0;position:relative;}
+  .hud-info{display:flex;flex-direction:column;gap:.2rem;min-width:108px;}
+  .hud-name-row{display:flex;align-items:center;gap:.4rem;}
+  .hud-name{font-family:'Space Grotesk';font-size:.78rem;font-weight:600;color:var(--text);}
+  .hud-lvl{font-family:var(--pixel);font-size:.6rem;color:#0b1210;background:var(--amber);padding:.1rem .4rem;border-radius:6px;font-weight:700;}
+  .hud-xpbar{width:100%;height:5px;border-radius:3px;background:var(--xp-bg);overflow:hidden;}
+  .hud-xpbar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--xp));transition:width .6s cubic-bezier(.22,1,.36,1);}
+  @media (max-width:768px){ .player-hud{top:auto;bottom:88px;left:12px;} .hud-info{min-width:88px;} }
+
+  .avatar-modal .modal-content{max-width:700px;padding:2rem;}
+  .ac-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
+  .ac-header h3{font-size:1.2rem;margin:0;}
+  .ac-body{display:grid;grid-template-columns:1fr 1.15fr;gap:1.8rem;align-items:start;}
+  @media (max-width:640px){ .ac-body{grid-template-columns:1fr;} }
+
+  .ac-stage{
+    background:radial-gradient(circle at 50% 20%, rgba(79,209,197,0.08), transparent 60%), var(--bg-raised-2);
+    border:1px solid var(--line);border-radius:14px;
+    display:flex;align-items:center;justify-content:center;padding:1.6rem 1rem;min-height:260px;position:relative;
+  }
+  .pixel-avatar{width:120px;height:150px;position:relative;image-rendering:pixelated;}
+  .pixel-avatar .pa-head{position:absolute;top:0;left:35px;width:50px;height:44px;border-radius:6px;}
+  .pixel-avatar .pa-hair{position:absolute;top:-6px;left:33px;width:54px;height:26px;border-radius:10px 10px 0 0;}
+  .pixel-avatar .pa-hair.style-spiky{clip-path:polygon(0% 100%,10% 20%,20% 100%,30% 10%,40% 100%,50% 15%,60% 100%,70% 10%,80% 100%,90% 20%,100% 100%);}
+  .pixel-avatar .pa-hair.style-bald{display:none;}
+  .pixel-avatar .pa-hair.style-buzz{height:14px;border-radius:8px 8px 0 0;}
+  .pixel-avatar .pa-hair.style-long{height:78px;border-radius:14px 14px 30px 30px;}
+  .pixel-avatar .pa-hair.style-bob{height:36px;border-radius:16px 16px 8px 8px;}
+  .pixel-avatar .pa-hair.style-ponytail{height:24px;border-radius:12px 12px 0 0;}
+  .pixel-avatar .pa-hair.style-ponytail::after{
+    content:'';position:absolute;top:16px;right:-9px;width:11px;height:40px;
+    border-radius:0 0 8px 8px;background:inherit;
+  }
+  .pixel-avatar .pa-body{position:absolute;top:46px;left:22px;width:76px;height:60px;border-radius:8px 8px 4px 4px;}
+  .pixel-avatar .pa-body.gender-female{
+    clip-path:polygon(18% 0%,82% 0%,100% 100%,0% 100%);border-radius:8px 8px 0 0;
+  }
+  .pixel-avatar .pa-legs{position:absolute;top:104px;left:30px;width:60px;height:46px;border-radius:4px;background:#2b2f36;}
+  .pixel-avatar .pa-acc{position:absolute;font-size:1.4rem;top:6px;left:44px;}
+  .pixel-avatar .pa-eyes{position:absolute;top:16px;left:44px;width:32px;display:flex;justify-content:space-between;}
+  .pixel-avatar .pa-eyes span{width:6px;height:6px;border-radius:50%;background:#1a1c1f;display:block;}
+
+  .ac-controls{display:flex;flex-direction:column;gap:1.1rem;}
+  .ac-group-label{font-family:var(--pixel);font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;display:block;}
+  .swatch-row{display:flex;gap:.55rem;flex-wrap:wrap;}
+  .swatch{width:30px;height:30px;border-radius:8px;border:2px solid transparent;cursor:pointer;transition:all .2s ease;}
+  .swatch:hover{transform:translateY(-2px);}
+  .swatch.selected{border-color:var(--teal);box-shadow:0 0 0 2px var(--bg-raised);}
+  .opt-row{display:flex;gap:.5rem;flex-wrap:wrap;}
+  .opt-btn{
+    font-family:var(--pixel);font-size:.72rem;padding:.45rem .85rem;border-radius:8px;
+    border:1px solid var(--line-strong);background:transparent;color:var(--text-muted);cursor:pointer;transition:all .2s ease;
+  }
+  .opt-btn:hover{border-color:var(--teal);color:var(--teal);}
+  .opt-btn.selected{background:var(--teal);border-color:var(--teal);color:#0b1210;font-weight:600;}
+  .ac-name-input{
+    width:100%;padding:.75rem 1rem;background:var(--bg);border:1px solid var(--line-strong);
+    border-radius:10px;color:var(--text);font-family:'Inter';font-size:.92rem;
+  }
+  .ac-name-input:focus{outline:none;border-color:var(--teal);}
+  .ac-footer{display:flex;gap:.8rem;margin-top:1.6rem;flex-wrap:wrap;}
+
+  .nav-links a{position:relative;}
+  .nav-quest-tag{
+    display:block;font-family:var(--pixel);font-size:.58rem;color:var(--text-dim);
+    letter-spacing:.08em;margin-top:.1rem;
+  }
+  .nav-links a.quest-done .nav-quest-tag::before{content:'✓ ';color:var(--xp);}
+  .quest-progress-track{
+    position:fixed;top:0;left:0;height:3px;width:100%;background:transparent;z-index:1600;
+  }
+  .quest-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--amber));transition:width .2s ease;}
+
+  .quest-badge{
+    display:inline-flex;align-items:center;gap:.4rem;font-family:var(--pixel);font-size:.68rem;
+    color:var(--amber);background:var(--amber-dim);border:1px solid rgba(255,180,84,0.3);
+    padding:.25rem .7rem;border-radius:50px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem;
+  }
+
+  #manifesto{padding:5rem 6%;}
+  .legend-slide{display:none;}
+  .legend-slide.active{display:flex;animation:slideUp .5s ease both;}
+  .legend-slide{
+    max-width:820px;margin:0 auto;align-items:center;gap:2rem;text-align:left;
+  }
+  .legend-card{
+    width:104px;height:104px;border-radius:16px;flex-shrink:0;position:relative;
+    display:flex;align-items:center;justify-content:center;font-family:var(--display);
+    font-size:2.6rem;color:#0b1210;font-weight:400;overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+  .legend-card::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 35%, rgba(0,0,0,0.15) 100%);
+  }
+  .legend-card .legend-icon{
+    position:absolute;bottom:6px;right:8px;font-size:1.1rem;line-height:1;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));z-index:1;
+  }
+  .legend-card span.legend-initials{position:relative;z-index:1;}
+  .legend-body{flex:1;}
+  .legend-quote{font-family:var(--display);text-transform:uppercase;font-weight:400;
+    font-size:clamp(1.3rem,3.4vw,2.1rem);line-height:1.15;letter-spacing:.005em;margin-bottom:.9rem;}
+  .legend-name{font-size:1rem;font-weight:600;color:var(--text);}
+  .legend-role{font-family:var(--pixel);font-size:.75rem;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;}
+  @media (max-width:640px){ .legend-slide{flex-direction:column;text-align:center;} }
+
+  .mood-row{display:flex;gap:.5rem;flex-wrap:wrap;padding:.2rem 1rem .9rem;}
+  .mood-chip{
+    font-family:var(--pixel);font-size:.74rem;padding:.4rem .8rem;border-radius:50px;
+    border:1px solid var(--line-strong);background:transparent;color:var(--text-muted);cursor:pointer;transition:all .2s ease;
+  }
+  .mood-chip:hover{border-color:var(--amber);color:var(--amber);}
+
+  /* ---- Walking world avatar (click-to-move companion) ---- */
+  .world-avatar{
+    position:fixed;left:24px;top:calc(100vh - 130px);width:70px;height:92px;
+    z-index:1300;display:none;pointer-events:none;
+  }
+  .world-avatar .wa-shadow{
+    position:absolute;bottom:-4px;left:50%;width:38px;height:9px;border-radius:50%;
+    background:rgba(0,0,0,0.45);transform:translateX(-50%);filter:blur(1px);
+  }
+  .world-avatar .wa-scale{transform:scale(0.58);transform-origin:top left;}
+  .world-avatar.face-left .wa-scale{transform:scale(0.58) scaleX(-1);}
+  .world-avatar.walking .wa-bounce{animation:walkBob .32s ease-in-out infinite;}
+  @keyframes walkBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+  .world-hint{
+    position:absolute;top:-26px;left:50%;transform:translateX(-50%);white-space:nowrap;
+    font-family:var(--pixel);font-size:.62rem;color:var(--text-dim);background:var(--bg-raised-2);
+    border:1px solid var(--line);padding:.2rem .5rem;border-radius:6px;opacity:0;transition:opacity .3s ease;
+  }
+  .world-avatar.show-hint .world-hint{opacity:1;}
+  @media (prefers-reduced-motion: reduce){
+    .world-avatar{transition:none !important;}
+  }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
+
+<!-- QUEST PROGRESS BAR (top of viewport) -->
+<div class="quest-progress-track"><div class="quest-progress-fill" id="questProgressFill"></div></div>
+
+<!-- QUEST TOAST CONTAINER -->
+<div class="quest-toast-wrap" id="questToastWrap"></div>
+
+<!-- PLAYER HUD -->
+<div class="player-hud" id="playerHud" title="Klik untuk edit karaktermu">
+  <div class="hud-avatar" id="hudAvatarSlot"></div>
+  <div class="hud-info">
+    <div class="hud-name-row">
+      <span class="hud-name" id="hudName">Player</span>
+      <span class="hud-lvl" id="hudLevel">Lv.1</span>
+    </div>
+    <div class="hud-xpbar"><i id="hudXpFill"></i></div>
+  </div>
+</div>
 
 <nav>
   <a href="#home" class="logo">
@@ -457,15 +773,99 @@
     <span class="logo-text">Luthfi Ardyansyah</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#featured">Featured Work</a></li>
-    <li><a href="#portfolio">Projects</a></li>
-    <li><a href="#beyond">Off The Clock</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#home" data-quest="home">Home Base<span class="nav-quest-tag">start</span></a></li>
+    <li><a href="#about" data-quest="about">Quest I<span class="nav-quest-tag">Origin Story</span></a></li>
+    <li><a href="#featured" data-quest="featured">Quest II<span class="nav-quest-tag">Boss Battle</span></a></li>
+    <li><a href="#portfolio" data-quest="portfolio">Quest III<span class="nav-quest-tag">Side Quests</span></a></li>
+    <li><a href="#beyond" data-quest="beyond">Quest IV<span class="nav-quest-tag">Hidden Level</span></a></li>
+    <li><a href="#contact" data-quest="contact">Final Quest<span class="nav-quest-tag">Summon Me</span></a></li>
   </ul>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </nav>
+
+<!-- AVATAR / CHARACTER CREATOR MODAL -->
+<div id="avatarModal" class="modal avatar-modal">
+  <div class="modal-content">
+    <span class="modal-close" id="avatarModalClose">&times;</span>
+    <div class="ac-header">
+      <div class="term-dots"><span></span><span></span><span></span></div>
+      <h3>character_select.exe</h3>
+    </div>
+    <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:1.4rem;">Bikin karaktermu dulu sebelum mulai quest jelajahin portfolio ini 🎮</p>
+    <div class="ac-body">
+      <div class="ac-stage">
+        <div class="pixel-avatar" id="pixelAvatarPreview">
+          <div class="pa-hair style-spiky" id="paHair"></div>
+          <div class="pa-head" id="paHead">
+            <div class="pa-eyes"><span></span><span></span></div>
+          </div>
+          <div class="pa-acc" id="paAcc"></div>
+          <div class="pa-body" id="paBody"></div>
+          <div class="pa-legs"></div>
+        </div>
+      </div>
+      <div class="ac-controls">
+        <div>
+          <span class="ac-group-label">Nama Pemain</span>
+          <input type="text" id="acName" class="ac-name-input" placeholder="Masukkan nickname kamu" maxlength="18">
+        </div>
+        <div>
+          <span class="ac-group-label">Gender</span>
+          <div class="opt-row" id="acGenderRow">
+            <button type="button" class="opt-btn" data-gender="male">Cowok</button>
+            <button type="button" class="opt-btn" data-gender="female">Cewek</button>
+          </div>
+        </div>
+        <div>
+          <span class="ac-group-label">Warna Kulit</span>
+          <div class="swatch-row" id="acSkinRow"></div>
+        </div>
+        <div>
+          <span class="ac-group-label">Gaya Rambut</span>
+          <div class="opt-row" id="acHairStyleRow"></div>
+        </div>
+        <div>
+          <span class="ac-group-label">Warna Rambut</span>
+          <div class="swatch-row" id="acHairColorRow"></div>
+        </div>
+        <div>
+          <span class="ac-group-label">Warna Outfit</span>
+          <div class="swatch-row" id="acOutfitRow"></div>
+        </div>
+        <div>
+          <span class="ac-group-label">Aksesoris</span>
+          <div class="opt-row" id="acAccRow">
+            <button type="button" class="opt-btn" data-acc="">None</button>
+            <button type="button" class="opt-btn" data-acc="🕶️">Kacamata Hitam</button>
+            <button type="button" class="opt-btn" data-acc="🧢">Topi</button>
+            <button type="button" class="opt-btn" data-acc="🎧">Headset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ac-footer">
+      <button type="button" class="btn btn-primary magnetic" id="acSaveBtn">Mulai Quest ▶</button>
+      <button type="button" class="btn btn-outline magnetic" id="acRandomBtn">🎲 Acak</button>
+    </div>
+  </div>
+</div>
+
+<!-- WALKING WORLD AVATAR — klik di mana aja untuk gerak -->
+<div class="world-avatar" id="worldAvatar">
+  <span class="world-hint">klik ke mana aja 👣</span>
+  <div class="wa-scale">
+    <div class="wa-bounce">
+      <div class="pixel-avatar" id="worldAvatarSprite">
+        <div class="pa-hair style-spiky"></div>
+        <div class="pa-head"><div class="pa-eyes"><span></span><span></span></div></div>
+        <div class="pa-acc"></div>
+        <div class="pa-body"></div>
+        <div class="pa-legs"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wa-shadow"></div>
+</div>
 
 <!-- HERO -->
 <section id="home">
@@ -475,9 +875,9 @@
     <p class="hero-role">Luthfi Ardyansyah — <span>AI/ML Engineer</span> &amp; Fullstack Developer</p>
     <p class="hero-desc">Informatics graduate focused on anomaly detection and predictive systems — from deep learning models on sensor data to the full-stack applications that put them to work.</p>
     <div class="hero-buttons">
-      <a href="#featured" class="btn btn-primary">View Featured Work</a>
-      <a href="#contact" class="btn btn-outline">Get in Touch</a>
-      <a href="CV_Luthfi_General_ID.pdf" download class="btn btn-outline">↓ Download CV</a>
+      <a href="#featured" class="btn btn-primary magnetic">View Featured Work</a>
+      <a href="#contact" class="btn btn-outline magnetic">Get in Touch</a>
+      <button type="button" id="openCvModal" class="btn btn-outline magnetic">↓ Download CV</button>
     </div>
 
     <div class="signal-panel reveal active">
@@ -507,6 +907,23 @@
   </div>
 </section>
 
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="hl"><i></i>OPEN TO WORK</span>
+    <span>AI / ML ENGINEER</span>
+    <span class="hl"><i></i>FULLSTACK DEVELOPER</span>
+    <span>ITENAS 2026</span>
+    <span class="hl"><i></i>ANOMALY DETECTION</span>
+    <span>QA BOOTCAMP</span>
+    <span class="hl"><i></i>OPEN TO WORK</span>
+    <span>AI / ML ENGINEER</span>
+    <span class="hl"><i></i>FULLSTACK DEVELOPER</span>
+    <span>ITENAS 2026</span>
+    <span class="hl"><i></i>ANOMALY DETECTION</span>
+    <span>QA BOOTCAMP</span>
+  </div>
+</div>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
@@ -514,6 +931,7 @@
       <img src="pay.jpg" alt="Luthfi Ardyansyah">
     </div>
     <div class="about-content reveal">
+      <span class="quest-badge">🗡️ Quest I · Origin Story</span><br>
       <span class="eyebrow">Tentang Saya</span>
       <h2 class="section-title">Informatics graduate, obsessed with the outlier in the data.</h2>
       <p>Halo! Saya Luthfi Ardyansyah, lulusan Teknik Informatika dengan fokus pada sistem deteksi anomali dan prediktif. Saya suka membangun model deep learning di atas data sensor, lalu membungkusnya jadi aplikasi web yang benar-benar bisa dipakai.</p>
@@ -573,9 +991,23 @@
   </div>
 </section>
 
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="hl"><i></i>VALIDATION LOSS 0.0064</span>
+    <span>AUTOENCODER + LSTM</span>
+    <span class="hl"><i></i>NASA C-MAPSS DATASET</span>
+    <span>UNSUPERVISED LEARNING</span>
+    <span class="hl"><i></i>VALIDATION LOSS 0.0064</span>
+    <span>AUTOENCODER + LSTM</span>
+    <span class="hl"><i></i>NASA C-MAPSS DATASET</span>
+    <span>UNSUPERVISED LEARNING</span>
+  </div>
+</div>
+
 <!-- FEATURED PROJECT -->
 <section id="featured">
   <div class="reveal">
+    <span class="quest-badge">⚔️ Quest II · Boss Battle</span><br>
     <span class="eyebrow">Featured Work</span>
     <h2 class="section-title">Aircraft Engine Predictive Maintenance</h2>
     <p class="section-intro">Tugas akhir saya: sistem deteksi anomali unsupervised pada data sensor multivariat time-series dari mesin pesawat komersial, menggunakan dataset NASA C-MAPSS.</p>
@@ -607,6 +1039,7 @@
 <!-- OTHER PROJECTS -->
 <section id="portfolio">
   <div class="reveal">
+    <span class="quest-badge">🗺️ Quest III · Side Quests</span><br>
     <span class="eyebrow">Portfolio</span>
     <h2 class="section-title">Proyek Lainnya</h2>
   </div>
@@ -695,6 +1128,7 @@
 <!-- FOCUS AREAS -->
 <section id="focus">
   <div class="reveal">
+    <span class="quest-badge">🌟 Skill Tree · Unlocked</span><br>
     <span class="eyebrow">Fokus Saya</span>
     <h2 class="section-title">Yang Saya Kerjakan Dengan Baik</h2>
   </div>
@@ -722,9 +1156,80 @@
   </div>
 </section>
 
+<!-- HALL OF LEGENDS — real quotes from tech icons -->
+<section id="manifesto">
+  <div class="manifesto-wrap">
+    <span class="quest-badge" style="margin:0 auto .8rem;">🏆 NPC Encounter · Hall of Legends</span><br>
+    <span class="eyebrow" style="justify-content:center;">legends.log</span>
+    <div id="manifestoSlides">
+      <div class="manifesto-slide legend-slide active">
+        <div class="legend-card" style="background:#4fd1c5;"><span class="legend-initials">LT</span><span class="legend-icon">🐧</span></div>
+        <div class="legend-body">
+          <p class="legend-quote">"Talk is cheap. <span class="lit">Show me the code.</span>"</p>
+          <div class="legend-name">Linus Torvalds</div>
+          <div class="legend-role">Creator of Linux &amp; Git</div>
+        </div>
+      </div>
+      <div class="manifesto-slide legend-slide">
+        <div class="legend-card" style="background:#ffb454;"><span class="legend-initials">GH</span><span class="legend-icon">⚓</span></div>
+        <div class="legend-body">
+          <p class="legend-quote">"The most dangerous phrase is, <span class="lit2">'we've always done it this way.'</span>"</p>
+          <div class="legend-name">Grace Hopper</div>
+          <div class="legend-role">Computer Scientist &amp; Rear Admiral</div>
+        </div>
+      </div>
+      <div class="manifesto-slide legend-slide">
+        <div class="legend-card" style="background:#7c9dff;"><span class="legend-initials">AL</span><span class="legend-icon">🔢</span></div>
+        <div class="legend-body">
+          <p class="legend-quote">"That brain of mine is something more than merely <span class="lit">mortal</span>."</p>
+          <div class="legend-name">Ada Lovelace</div>
+          <div class="legend-role">First Computer Programmer</div>
+        </div>
+      </div>
+      <div class="manifesto-slide legend-slide">
+        <div class="legend-card" style="background:#a970ff;"><span class="legend-initials">AT</span><span class="legend-icon">🔐</span></div>
+        <div class="legend-body">
+          <p class="legend-quote">"Sometimes it is the people no one imagines anything of who do the things <span class="lit2">no one can imagine</span>."</p>
+          <div class="legend-name">Alan Turing</div>
+          <div class="legend-role">Father of Computer Science</div>
+        </div>
+      </div>
+      <div class="manifesto-slide legend-slide">
+        <div class="legend-card" style="background:#4fd1c5;"><span class="legend-initials">SJ</span><span class="legend-icon">🍎</span></div>
+        <div class="legend-body">
+          <p class="legend-quote">"Stay hungry. <span class="lit">Stay foolish.</span>"</p>
+          <div class="legend-name">Steve Jobs</div>
+          <div class="legend-role">Co-founder, Apple</div>
+        </div>
+      </div>
+      <div class="manifesto-slide legend-slide">
+        <div class="legend-card" style="background:#ffb454;"><span class="legend-initials">MH</span><span class="legend-icon">🚀</span></div>
+        <div class="legend-body">
+          <p class="legend-quote">"There was no choice but to be pioneers; <span class="lit2">software was a mystery</span>."</p>
+          <div class="legend-name">Margaret Hamilton</div>
+          <div class="legend-role">Lead Software Engineer, Apollo</div>
+        </div>
+      </div>
+      <div class="manifesto-slide legend-slide">
+        <div class="legend-card" style="background:linear-gradient(135deg,#4fd1c5,#ffb454);"><span class="legend-initials">LA</span><span class="legend-icon">⭐</span></div>
+        <div class="legend-body">
+          <p class="legend-quote">"Believe in yourself — <span class="lit">effort</span> will always outshine <span class="lit2">natural talent</span>."</p>
+          <div class="legend-name">Luthfi Ardyansyah</div>
+          <div class="legend-role">Builder of This Universe 🎮</div>
+        </div>
+      </div>
+    </div>
+    <div class="manifesto-index">
+      <span id="manifestoCount">01 / 07</span>
+      <div class="manifesto-dots" id="manifestoDots"></div>
+    </div>
+  </div>
+</section>
+
 <!-- OFF THE CLOCK -->
 <section id="beyond">
   <div class="reveal">
+    <span class="quest-badge">🎁 Quest IV · Hidden Level</span><br>
     <span class="eyebrow">off the clock</span>
     <h2 class="section-title">Kalau Lagi Gak Ngoding</h2>
     <p class="section-intro">Dua hal lain yang biasa muter di background — playlist dan skor pertandingan.</p>
@@ -768,6 +1273,7 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="reveal">
+    <span class="quest-badge">👑 Final Quest · Summon Me</span><br>
     <span class="eyebrow">Kontak</span>
     <h2 class="section-title">Mari Terhubung</h2>
   </div>
@@ -824,6 +1330,46 @@
   </div>
 </div>
 
+<!-- CV DOWNLOAD MODAL -->
+<div id="cvModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" id="cvModalClose">&times;</span>
+    <div class="term-dots" style="margin-bottom:1rem;"><span></span><span></span><span></span></div>
+    <h3>access_request.log</h3>
+    <p>Isi nama &amp; email dulu buat unlock CV-nya — biar Luthfi tau siapa yang lagi ngintip 👀</p>
+    <form class="cv-form" id="cvForm" novalidate>
+      <div class="form-group">
+        <label for="cvName">Nama Lengkap</label>
+        <input type="text" id="cvName" placeholder="Nama kamu">
+        <span class="cv-error" id="cvNameError"></span>
+      </div>
+      <div class="form-group">
+        <label for="cvEmail">Email</label>
+        <input type="email" id="cvEmail" placeholder="email@contoh.com">
+        <span class="cv-error" id="cvEmailError"></span>
+      </div>
+      <!-- honeypot, kept hidden from real users -->
+      <div style="position:absolute;left:-9999px;" aria-hidden="true">
+        <input type="text" id="cvWebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <button type="submit" class="btn-submit">Unlock &amp; Download</button>
+      <div class="cv-success" id="cvSuccess" style="display:none;">✅ Validated — download starting…</div>
+    </form>
+  </div>
+</div>
+
+<!-- VISITOR GEO TOAST -->
+<div class="geo-toast" id="geoToast">
+  <div class="geo-toast-head">
+    <i class="live-dot"></i>
+    <span class="geo-toast-label">signal_detected</span>
+    <button class="geo-toast-close" id="geoToastClose">&times;</button>
+  </div>
+  <p class="geo-toast-text" id="geoToastText">Locating visitor…</p>
+</div>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
 <!-- AI Chat Widget -->
 <button class="chat-toggle" id="chatToggle" aria-label="Tanya tentang pengalaman Luthfi">
   💬<span class="ping"></span>
@@ -832,10 +1378,15 @@
 <div class="chat-window" id="chatWindow">
   <div class="chat-header">
     <div class="term-dots"><span></span><span></span><span></span></div>
-    <div class="chat-title"><b>luthfi-assistant</b> · tanya soal experience</div>
+    <div class="chat-title"><span class="chat-online-dot"></span><b>luthfi-assistant</b> · online</div>
     <button class="chat-close" id="chatClose">&times;</button>
   </div>
   <div class="chat-body" id="chatBody"></div>
+  <div class="mood-row" id="moodRow" style="display:none;">
+    <button class="mood-chip" data-mood="asik">😄 Asik banget</button>
+    <button class="mood-chip" data-mood="biasa">🙂 Biasa aja</button>
+    <button class="mood-chip" data-mood="capek">😩 Agak capek</button>
+  </div>
   <div class="chat-suggestions" id="chatSuggestions">
     <button class="chip" data-q="Skill apa aja yang kamu kuasai?">Skills</button>
     <button class="chip" data-q="Ceritain soal proyek thesis kamu">Thesis Project</button>
@@ -883,6 +1434,38 @@
     {
       keywords: ['musik','music','lagu','gorillaz','chemical romance','pop punk','bola','chelsea','sepak bola','football'],
       answer: "Di luar kerjaan, Luthfi suka dengerin Gorillaz & My Chemical Romance (genre pop punk), dan supporter Chelsea FC. Bisa diliat di section 'Off The Clock' ☝️"
+    },
+    {
+      keywords: ['cv','download cv','resume'],
+      answer: "CV-nya bisa langsung di-download lewat tombol 'Download CV' di hero section — nanti ada form kecil buat isi nama & email dulu sebelum filenya ke-unlock."
+    },
+    {
+      keywords: ['hari ini','harimu','hari kamu','apa kabar','kabar','gimana kabar'],
+      answer: "Aku sih on-fire terus, tiap hari nemenin orang jelajahin quest log-nya Luthfi 😄. Kalau kamu gimana harimu — asik, biasa aja, atau agak capek?"
+    },
+    {
+      keywords: ['capek','lelah','cape','ngantuk','burnout'],
+      answer: "Wah, semangat ya 💪 istirahat bentar juga gapapa kok. Sambil rehat, boleh liat-liat quest log Luthfi dulu — siapa tau ada yang bikin kamu semangat lagi."
+    },
+    {
+      keywords: ['seneng','senang','happy','asik','asyik','bagus banget'],
+      answer: "Nice, ikutan seneng dengernya! 🎉 Energi bagus nih buat lanjut explore quest berikutnya. Mau liat 'Boss Battle' (proyek unggulan) dulu?"
+    },
+    {
+      keywords: ['sedih','galau','down','kurang baik','gak baik','bosen','bosan'],
+      answer: "Duh, semoga cepat membaik ya 🙏. Kalau butuh distraksi ringan, coba mampir ke 'Hidden Level' — ada playlist musik & info Chelsea FC di situ, siapa tau ngebantu mood."
+    },
+    {
+      keywords: ['siapa kamu','kamu siapa','kamu bot','ai apa','kamu ai'],
+      answer: "Aku chatbot kecil yang dibikin buat nemenin kamu jelajahin portfolio Luthfi — anggap aja aku NPC penjaga gerbang quest log ini 🧭. Ada yang mau ditanyain soal Luthfi?"
+    },
+    {
+      keywords: ['makasih','terima kasih','thanks','thank you'],
+      answer: "Sama-sama! 🙌 Kalau ada pertanyaan lain soal Luthfi, tinggal ketik aja atau klik chip di bawah."
+    },
+    {
+      keywords: ['halo','hai','hello','selamat pagi','selamat siang','selamat malam'],
+      answer: "Halo juga! 👋 Aku asisten virtualnya Luthfi. Tanya-tanya aja soal skill, thesis, pengalaman kerja, atau proyek dia — atau klik salah satu chip di bawah."
     }
   ];
 
@@ -926,11 +1509,28 @@
     chatBody.scrollTop = chatBody.scrollHeight;
   }
 
+  function addTyping(){
+    const div = document.createElement('div');
+    div.className = 'msg msg-bot msg-typing';
+    div.id = 'typingIndicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function removeTyping(){
+    const el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+  }
+
   function handleUserMessage(text){
     if (!text.trim()) return;
     addMessage(text, 'user');
     chatInput.value = '';
+    addTyping();
+    const delay = 500 + Math.random() * 550;
     setTimeout(() => {
+      removeTyping();
       const entry = findAnswer(text);
       if (entry){
         addMessage(entry.answer, 'bot');
@@ -939,24 +1539,63 @@
         addMessage(FALLBACK, 'bot');
         addCTA();
       }
-    }, 350);
+    }, delay);
+  }
+
+  const moodRow = document.getElementById('moodRow');
+  const moodChips = document.querySelectorAll('.mood-chip');
+
+  function getPlayerName(){
+    try{
+      const raw = localStorage.getItem('luthfi_player');
+      if (raw){ const p = JSON.parse(raw); if (p && p.name) return p.name; }
+    }catch(e){}
+    return null;
   }
 
   chatToggle.addEventListener('click', () => {
     chatWindow.classList.toggle('open');
     chatToggle.querySelector('.ping').style.display = 'none';
     if (chatBody.children.length === 0){
-      addMessage("Hai! Aku asisten portfolio-nya Luthfi 👋\nTanya-tanya aja soal skill, thesis project, pengalaman kerja, atau proyek dia. Kalau mau ngobrol lebih lanjut, aku arahin ke contact-nya.", 'bot');
+      const pname = getPlayerName();
+      const greet = pname
+        ? `Hai, ${pname}! 👋 Aku asisten portfolio-nya Luthfi.`
+        : `Hai! Aku asisten portfolio-nya Luthfi 👋`;
+      addMessage(greet + "\nTanya-tanya aja soal skill, thesis project, pengalaman kerja, atau proyek dia.", 'bot');
+      setTimeout(() => {
+        addMessage("Btw, sebelum lanjut — hari kamu gimana? 😊", 'bot');
+        moodRow.style.display = 'flex';
+      }, 700);
     }
   });
   chatClose.addEventListener('click', () => chatWindow.classList.remove('open'));
 
-  chatSend.addEventListener('click', () => handleUserMessage(chatInput.value));
+  moodChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const mood = chip.dataset.mood;
+      moodRow.style.display = 'none';
+      const label = chip.textContent.trim();
+      addMessage(label, 'user');
+      addTyping();
+      setTimeout(() => {
+        removeTyping();
+        if (mood === 'asik'){
+          addMessage("Mantap! Energi positif nih 🎉 Yuk lanjut, mau mulai dari mana — skill, thesis project, atau proyek lainnya?", 'bot');
+        } else if (mood === 'capek'){
+          addMessage("Semangat ya 💪 santai aja explore-nya, gak perlu buru-buru. Mau aku kasih ringkasan singkat soal Luthfi dulu?", 'bot');
+        } else {
+          addMessage("Oke noted 🙂 Yuk aku bantu kenalin Luthfi — mau tau soal skill, pengalaman kerja, atau proyeknya?", 'bot');
+        }
+      }, 500 + Math.random() * 400);
+    });
+  });
+
+  chatSend.addEventListener('click', () => { moodRow.style.display = 'none'; handleUserMessage(chatInput.value); });
   chatInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') handleUserMessage(chatInput.value);
+    if (e.key === 'Enter'){ moodRow.style.display = 'none'; handleUserMessage(chatInput.value); }
   });
   chips.forEach(chip => {
-    chip.addEventListener('click', () => handleUserMessage(chip.dataset.q));
+    chip.addEventListener('click', () => { moodRow.style.display = 'none'; handleUserMessage(chip.dataset.q); });
   });
 })();
 </script>
@@ -1082,6 +1721,470 @@
   });
   modalClose.addEventListener('click', () => modal.style.display = 'none');
   window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+</script>
+
+<!-- Cursor glow + magnetic buttons -->
+<script>
+(function(){
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const glow = document.getElementById('cursorGlow');
+  if (glow && !isTouch && !reduceMotion){
+    window.addEventListener('mousemove', (e) => {
+      glow.classList.add('on');
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => glow.classList.remove('on'));
+  }
+
+  if (!isTouch && !reduceMotion){
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = 'translate(' + (x * 0.22).toFixed(1) + 'px,' + (y * 0.32).toFixed(1) + 'px)';
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
+    });
+  }
+})();
+</script>
+
+<!-- Manifesto quote slider -->
+<script>
+(function(){
+  const slides = document.querySelectorAll('.manifesto-slide');
+  const dotsWrap = document.getElementById('manifestoDots');
+  const countEl = document.getElementById('manifestoCount');
+  if (!slides.length || !dotsWrap || !countEl) return;
+
+  let idx = 0;
+  const total = slides.length;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    if (i === 0) dot.classList.add('active');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = dotsWrap.querySelectorAll('button');
+
+  function pad(n){ return String(n + 1).padStart(2, '0'); }
+
+  function goTo(i){
+    slides[idx].classList.remove('active');
+    dots[idx].classList.remove('active');
+    idx = i;
+    slides[idx].classList.add('active');
+    dots[idx].classList.add('active');
+    countEl.textContent = pad(idx) + ' / ' + pad(total - 1);
+  }
+
+  countEl.textContent = pad(0) + ' / ' + pad(total - 1);
+
+  let auto = setInterval(() => goTo((idx + 1) % total), 4200);
+  const wrap = document.querySelector('.manifesto-wrap');
+  wrap.addEventListener('mouseenter', () => clearInterval(auto));
+  wrap.addEventListener('mouseleave', () => {
+    auto = setInterval(() => goTo((idx + 1) % total), 4200);
+  });
+})();
+</script>
+
+<!-- Visitor geo toast -->
+<script>
+(function(){
+  const toast = document.getElementById('geoToast');
+  const toastText = document.getElementById('geoToastText');
+  const closeBtn = document.getElementById('geoToastClose');
+  if (!toast || !toastText) return;
+
+  let dismissTimer;
+  function showToast(){
+    setTimeout(() => {
+      toast.classList.add('show');
+      dismissTimer = setTimeout(hideToast, 9000);
+    }, 1200);
+  }
+  function hideToast(){ toast.classList.remove('show'); }
+  closeBtn.addEventListener('click', () => { clearTimeout(dismissTimer); hideToast(); });
+
+  fetch('https://ipwho.is/')
+    .then(r => r.json())
+    .then(data => {
+      if (data && data.success !== false && data.city){
+        toastText.innerHTML = 'Kamu ngintip dari <b>' + data.city + ', ' + (data.country || '') + '</b> — welcome! 👋';
+      } else {
+        toastText.textContent = 'Halo, siapapun dan dari manapun kamu — welcome! 👋';
+      }
+      showToast();
+    })
+    .catch(() => {
+      toastText.textContent = 'Halo, siapapun dan dari manapun kamu — welcome! 👋';
+      showToast();
+    });
+})();
+</script>
+
+<!-- ================= AVATAR CREATOR + PLAYER HUD + QUEST TRACKER ================= -->
+<script>
+(function(){
+  const SKIN_COLORS   = ['#ffdbac','#f1c27d','#e0ac69','#c68642','#8d5524','#5a3825'];
+  const HAIR_COLORS   = ['#2b2b2b','#5a3825','#8d5524','#d4a017','#c0392b','#7c9dff','#a970ff'];
+  const OUTFIT_COLORS = ['#4fd1c5','#ffb454','#7c9dff','#a970ff','#ff5f57','#2b2f36'];
+  const HAIR_STYLES = {
+    male:   [{v:'spiky',l:'Spiky'},{v:'buzz',l:'Buzz'},{v:'bald',l:'Bald'}],
+    female: [{v:'long',l:'Long Hair'},{v:'ponytail',l:'Ponytail'},{v:'bob',l:'Bob'}]
+  };
+  const STORE_KEY = 'luthfi_player';
+
+  let state = {
+    name: '', gender: 'male', skin: SKIN_COLORS[1], hairStyle: 'spiky', hairColor: HAIR_COLORS[0],
+    outfit: OUTFIT_COLORS[0], acc: '', xp: 0, questsDone: []
+  };
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw){ state = Object.assign(state, JSON.parse(raw)); }
+    }catch(e){}
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  // ---------- render helpers ----------
+  function buildSwatchRow(container, colors, key, onPick){
+    container.innerHTML = '';
+    colors.forEach(c => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'swatch'; b.style.background = c;
+      if (state[key] === c) b.classList.add('selected');
+      b.addEventListener('click', () => {
+        state[key] = c;
+        container.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+        b.classList.add('selected');
+        onPick && onPick();
+        renderPixelAvatar('pixelAvatarPreview');
+      });
+      container.appendChild(b);
+    });
+  }
+
+  function renderPixelAvatar(rootId){
+    const root = document.getElementById(rootId);
+    if (!root) return;
+    const head = root.querySelector('.pa-head');
+    const hair = root.querySelector('.pa-hair');
+    const body = root.querySelector('.pa-body');
+    const acc  = root.querySelector('.pa-acc');
+    if (head) head.style.background = state.skin;
+    if (hair){
+      hair.style.background = state.hairColor;
+      hair.className = 'pa-hair style-' + state.hairStyle;
+    }
+    if (body){
+      body.style.background = state.outfit;
+      body.className = 'pa-body' + (state.gender === 'female' ? ' gender-female' : '');
+    }
+    if (acc) acc.textContent = state.acc || '';
+  }
+
+  function renderHairStyleOptions(){
+    const row = document.getElementById('acHairStyleRow');
+    if (!row) return;
+    const list = HAIR_STYLES[state.gender] || HAIR_STYLES.male;
+    if (!list.some(h => h.v === state.hairStyle)) state.hairStyle = list[0].v;
+    row.innerHTML = '';
+    list.forEach(h => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt-btn'; b.dataset.hairstyle = h.v; b.textContent = h.l;
+      if (state.hairStyle === h.v) b.classList.add('selected');
+      b.addEventListener('click', () => {
+        state.hairStyle = h.v;
+        row.querySelectorAll('.opt-btn').forEach(x => x.classList.remove('selected'));
+        b.classList.add('selected');
+        renderPixelAvatar('pixelAvatarPreview');
+      });
+      row.appendChild(b);
+    });
+  }
+
+  function renderGenderOptions(){
+    document.querySelectorAll('#acGenderRow .opt-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.gender === state.gender);
+      b.onclick = () => {
+        state.gender = b.dataset.gender;
+        document.querySelectorAll('#acGenderRow .opt-btn').forEach(x => x.classList.remove('selected'));
+        b.classList.add('selected');
+        renderHairStyleOptions();
+        renderPixelAvatar('pixelAvatarPreview');
+      };
+    });
+  }
+
+  function renderMiniAvatar(container){
+    container.innerHTML = '';
+    const mini = document.createElement('div');
+    mini.style.cssText = 'width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;background:' + state.outfit + '22;';
+    mini.innerHTML =
+      '<div style="position:absolute;top:4px;width:20px;height:18px;border-radius:5px;background:' + state.skin + ';"></div>' +
+      (state.hairStyle !== 'bald' ? '<div style="position:absolute;top:1px;width:22px;height:8px;border-radius:5px 5px 0 0;background:' + state.hairColor + ';"></div>' : '') +
+      '<div style="position:absolute;bottom:3px;width:26px;height:14px;border-radius:6px 6px 2px 2px;background:' + state.outfit + ';"></div>';
+    container.appendChild(mini);
+  }
+
+  function levelFromXp(xp){ return Math.floor(xp / 300) + 1; }
+
+  function updateHud(){
+    const hudName = document.getElementById('hudName');
+    const hudLevel = document.getElementById('hudLevel');
+    const hudXpFill = document.getElementById('hudXpFill');
+    const hudAvatarSlot = document.getElementById('hudAvatarSlot');
+    if (!hudName) return;
+    hudName.textContent = state.name || 'Player';
+    const lvl = levelFromXp(state.xp);
+    hudLevel.textContent = 'Lv.' + lvl;
+    const within = state.xp % 300;
+    hudXpFill.style.width = Math.min(100, (within / 300) * 100) + '%';
+    renderMiniAvatar(hudAvatarSlot);
+    document.getElementById('playerHud').classList.add('ready');
+  }
+
+  function updateTopProgress(){
+    const total = document.querySelectorAll('.nav-links a[data-quest]').length;
+    const done = state.questsDone.length;
+    const fill = document.getElementById('questProgressFill');
+    if (fill) fill.style.width = (total ? (done / total) * 100 : 0) + '%';
+  }
+
+  function showQuestToast(title, xp){
+    const wrap = document.getElementById('questToastWrap');
+    if (!wrap) return;
+    const el = document.createElement('div');
+    el.className = 'quest-toast';
+    el.innerHTML = '<div class="qt-top">Quest Complete</div><div class="qt-title">' + title + '</div><div class="qt-xp">+' + xp + ' XP</div>';
+    wrap.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('show'));
+    setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => el.remove(), 500);
+    }, 3200);
+  }
+
+  const QUEST_LABELS = {
+    home: 'Home Base — Tiba di Portfolio',
+    about: 'Origin Story Selesai',
+    featured: 'Boss Battle Ditaklukkan',
+    portfolio: 'Side Quests Ditemukan',
+    beyond: 'Hidden Level Terbuka',
+    contact: 'Final Quest — Terhubung!'
+  };
+
+  function markQuestDone(id){
+    if (state.questsDone.includes(id)) return;
+    state.questsDone.push(id);
+    state.xp += 100;
+    saveState();
+    updateHud();
+    updateTopProgress();
+    const navLink = document.querySelector('.nav-links a[data-quest="' + id + '"]');
+    if (navLink) navLink.classList.add('quest-done');
+    showQuestToast(QUEST_LABELS[id] || id, 100);
+  }
+
+  function initQuestTracker(){
+    const ids = ['home','about','featured','portfolio','beyond','contact'];
+    const opts = { threshold: 0.35 };
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) markQuestDone(entry.target.id);
+      });
+    }, opts);
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    updateTopProgress();
+  }
+
+  // ---------- Avatar modal wiring ----------
+  const avatarModal = document.getElementById('avatarModal');
+  const avatarModalClose = document.getElementById('avatarModalClose');
+  const playerHud = document.getElementById('playerHud');
+  const acName = document.getElementById('acName');
+  const acSaveBtn = document.getElementById('acSaveBtn');
+  const acRandomBtn = document.getElementById('acRandomBtn');
+
+  function openAvatarModal(){
+    acName.value = state.name;
+    buildSwatchRow(document.getElementById('acSkinRow'), SKIN_COLORS, 'skin');
+    buildSwatchRow(document.getElementById('acHairColorRow'), HAIR_COLORS, 'hairColor');
+    buildSwatchRow(document.getElementById('acOutfitRow'), OUTFIT_COLORS, 'outfit');
+    renderGenderOptions();
+    renderHairStyleOptions();
+    document.querySelectorAll('#acAccRow .opt-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.acc === state.acc);
+      b.onclick = () => {
+        state.acc = b.dataset.acc;
+        document.querySelectorAll('#acAccRow .opt-btn').forEach(x => x.classList.remove('selected'));
+        b.classList.add('selected');
+        renderPixelAvatar('pixelAvatarPreview');
+      };
+    });
+    renderPixelAvatar('pixelAvatarPreview');
+    avatarModal.style.display = 'flex';
+  }
+  function closeAvatarModal(){ avatarModal.style.display = 'none'; }
+
+  avatarModalClose.addEventListener('click', closeAvatarModal);
+  avatarModal.addEventListener('click', (e) => { if (e.target === avatarModal) closeAvatarModal(); });
+  playerHud.addEventListener('click', openAvatarModal);
+
+  acSaveBtn.addEventListener('click', () => {
+    state.name = (acName.value || '').trim() || 'Player';
+    saveState();
+    updateHud();
+    closeAvatarModal();
+    showWorldAvatar();
+  });
+
+  acRandomBtn.addEventListener('click', () => {
+    state.gender = Math.random() < 0.5 ? 'male' : 'female';
+    state.skin = SKIN_COLORS[Math.floor(Math.random() * SKIN_COLORS.length)];
+    state.hairColor = HAIR_COLORS[Math.floor(Math.random() * HAIR_COLORS.length)];
+    state.outfit = OUTFIT_COLORS[Math.floor(Math.random() * OUTFIT_COLORS.length)];
+    const styles = HAIR_STYLES[state.gender];
+    state.hairStyle = styles[Math.floor(Math.random() * styles.length)].v;
+    const accs = ['','🕶️','🧢','🎧'];
+    state.acc = accs[Math.floor(Math.random() * accs.length)];
+    openAvatarModal();
+  });
+
+  // ---------- walking world avatar (click-to-move companion) ----------
+  const worldAvatar = document.getElementById('worldAvatar');
+  let hasWalked = false;
+
+  function showWorldAvatar(){
+    if (!worldAvatar) return;
+    worldAvatar.style.display = 'block';
+    renderPixelAvatar('worldAvatarSprite');
+    if (!hasWalked){
+      worldAvatar.classList.add('show-hint');
+      setTimeout(() => worldAvatar.classList.remove('show-hint'), 4000);
+    }
+  }
+
+  function walkWorldAvatarTo(clientX, clientY){
+    if (!worldAvatar || worldAvatar.style.display !== 'block') return;
+    hasWalked = true;
+    worldAvatar.classList.remove('show-hint');
+    const rect = worldAvatar.getBoundingClientRect();
+    const curX = rect.left, curY = rect.top;
+    const targetX = Math.max(6, Math.min(window.innerWidth - 76, clientX - 35));
+    const targetY = Math.max(80, Math.min(window.innerHeight - 100, clientY - 46));
+    const dist = Math.hypot(targetX - curX, targetY - curY);
+    const speed = 380; // px per second
+    const duration = Math.min(2.6, Math.max(0.25, dist / speed));
+    worldAvatar.style.transition = 'left ' + duration + 's linear, top ' + duration + 's linear';
+    worldAvatar.style.left = targetX + 'px';
+    worldAvatar.style.top = targetY + 'px';
+    worldAvatar.classList.toggle('face-left', targetX < curX);
+    worldAvatar.classList.add('walking');
+    clearTimeout(worldAvatar._walkTimer);
+    worldAvatar._walkTimer = setTimeout(() => worldAvatar.classList.remove('walking'), duration * 1000);
+  }
+
+  const WALK_SKIP_SELECTORS = ['nav', '.modal', '.chat-window', '.chat-toggle', '.player-hud', '#worldAvatar'];
+  document.addEventListener('click', (e) => {
+    if (WALK_SKIP_SELECTORS.some(sel => e.target.closest(sel))) return;
+    walkWorldAvatarTo(e.clientX, e.clientY);
+  });
+
+  // ---------- boot ----------
+  loadState();
+  updateHud();
+  initQuestTracker();
+
+  // Selalu arahkan pengunjung untuk bikin/konfirmasi avatar tiap kali buka web.
+  // Data avatar sebelumnya (jika ada) tetap dipakai sebagai default di form.
+  setTimeout(openAvatarModal, 1000);
+})();
+</script>
+
+<!-- CV download gate -->
+<script>
+(function(){
+  const openBtn = document.getElementById('openCvModal');
+  const modal = document.getElementById('cvModal');
+  if (!openBtn || !modal) return;
+
+  const closeBtn = document.getElementById('cvModalClose');
+  const form = document.getElementById('cvForm');
+  const nameInput = document.getElementById('cvName');
+  const emailInput = document.getElementById('cvEmail');
+  const nameError = document.getElementById('cvNameError');
+  const emailError = document.getElementById('cvEmailError');
+  const honeypot = document.getElementById('cvWebsite');
+  const successBox = document.getElementById('cvSuccess');
+  const CV_PATH = 'CV_Luthfi_General_ID.pdf';
+
+  function openModal(){
+    modal.style.display = 'flex';
+    successBox.style.display = 'none';
+    form.style.display = '';
+    nameError.textContent = '';
+    emailError.textContent = '';
+  }
+  function closeModal(){ modal.style.display = 'none'; }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+  });
+
+  function isValidEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (honeypot.value) return;
+
+    let valid = true;
+    nameError.textContent = '';
+    emailError.textContent = '';
+
+    if (nameInput.value.trim().length < 2){
+      nameError.textContent = 'Nama minimal 2 karakter ya.';
+      valid = false;
+    }
+    if (!isValidEmail(emailInput.value.trim())){
+      emailError.textContent = 'Format email-nya belum valid.';
+      valid = false;
+    }
+    if (!valid) return;
+
+    successBox.style.display = 'flex';
+    const link = document.createElement('a');
+    link.href = CV_PATH;
+    link.setAttribute('download', '');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => {
+      closeModal();
+      form.reset();
+    }, 1500);
+  });
+})();
 </script>
 </body>
 </html>
