@@ -376,10 +376,16 @@
 
   /* modal */
   .modal{display:none;position:fixed;inset:0;background:rgba(10,12,16,0.85);backdrop-filter:blur(8px);
-    justify-content:center;align-items:center;z-index:2000;padding:2rem;}
+    justify-content:center;align-items:center;z-index:2000;padding:2rem;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;}
   .modal-content{
     background:var(--bg-raised);border:1px solid var(--line-strong);border-radius:18px;
     padding:2.6rem;max-width:560px;width:100%;position:relative;
+    margin:auto;
+  }
+  @media (max-width:640px){
+    .modal{align-items:flex-start;padding:1.2rem 1rem 3rem;}
+    .modal-content{padding:1.6rem;}
   }
   .modal-content h3{font-size:1.4rem;margin-bottom:.9rem;}
   .modal-content p{color:var(--text-muted);line-height:1.75;margin-bottom:.8rem;font-size:.95rem;}
@@ -929,7 +935,7 @@
 <section id="about">
   <div class="about-grid">
     <div class="about-photo reveal">
-      <img src="luthfiardy.jpeg" alt="Luthfi Ardyansyah">
+      <img src="pay.jpg" alt="Luthfi Ardyansyah">
     </div>
     <div class="about-content reveal">
       <span class="quest-badge">🗡️ Quest I · Origin Story</span><br>
@@ -1216,7 +1222,7 @@
         <div class="legend-body">
           <p class="legend-quote">"Believe in yourself — <span class="lit">effort</span> will always outshine <span class="lit2">natural talent</span>."</p>
           <div class="legend-name">Luthfi Ardyansyah</div>
-          <div class="legend-role">CO Founder(soon, aamiin) PieWay Corp </div>
+          <div class="legend-role">Builder of This Universe 🎮</div>
         </div>
       </div>
     </div>
